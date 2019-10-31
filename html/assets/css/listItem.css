@@ -1,0 +1,22 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+#icon {
+	height: 40px;
+	width: auto;
+}
+
+.container {
+	margin: 2% 0 2% 10%;
+}
+
+.mr-auto {
+	margin-right: 0 !important;
+	margin-left: auto;
+}
+
+.card {
+	width: 24%;
+	height: auto;
+}

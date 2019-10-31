@@ -1,0 +1,26 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+body > div {
+	border: 1px solid rgba(200,200,200,0.5);
+}
+
+.login .content {
+	margin: 10% auto;
+	/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+#newToHappyMall {
+	margin-top: 10px;
+	text-align: center;
+}
+
+#register, #login {
+	display: block;
+	width: 100%;
+}
+
+.login {
+	background-color: white !important;
+}

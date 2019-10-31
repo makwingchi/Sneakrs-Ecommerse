@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charrset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="static/assets/global/css/components.css">
+<link rel="stylesheet" type="text/css" href="static/assets/admin/pages/css/login.css">
+<link rel="stylesheet" type="text/css" href="assets/css/getitem.css">
+<script type="text/javascript" src="static/assets/global/plugins/jquery-1.11.0.min.js"></script>
+
+	<title>Item Page</title>
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<h3>Product Details</h3>
+				<hr>
+				<div id="promoStartDateContainer" class="form-group">
+<!-- 			<label style="color:blue" id="promoStatus" class="control-label"></label>
+ -->			<div>
+						<label style="color:red" class="control-label" id="promoStartDate">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Product:</label>
+					<div>
+						<label class="control-label" id="title">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Description:</label>
+					<div>
+						<label class="control-label" id="description">
+					</div>
+				</div>
+				<div id="normalPriceContainer" class="form-group">
+					<label class="control-label">Price:</label>
+					<div>
+						<label class="control-label" id="price">
+					</div>
+				</div>
+				<div id="promoPriceContainer" class="form-group">
+					<label style="color:red" class="control-label" id="lightningPrice"></label>
+					<div>
+						<label style="color:red" class="control-label" id="promoPrice">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Stock:</label>
+					<div>
+						<label class="control-label" id="stock">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">Sales:</label>
+					<div>
+						<label class="control-label" id="sales">
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-primary" id="createorder" type="submit">
+						Purchase
+					</button>
+					<button class="btn btn-link" id="back" type="submit" onclick="window.location.href = 'listitem.html';">
+						Back
+					</button>
+				</div>
+			</div>
+			<div class="col-6">
+					<img id="imgUrl">
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="assets/js/getitem.js"></script>
+
+</html>

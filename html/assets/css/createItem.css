@@ -1,0 +1,17 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.login .content {
+	margin: 5% auto;
+	border: 1px solid rgba(200,200,200,0.5);
+}
+
+#create {
+	display: block;
+	width: 100%;
+}
+
+.login {
+	background-color: white !important;
+}
