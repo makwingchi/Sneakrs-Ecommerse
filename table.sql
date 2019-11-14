@@ -1,21 +1,31 @@
-/*
- Navicat MySQL Data Transfer
+-- MySQL dump 10.13  Distrib 5.6.17-ndb-7.3.5, for osx10.7 (i386)
+--
+-- Host: localhost    Database: deal
+-- ------------------------------------------------------
+-- Server version	5.6.17-ndb-7.3.5-cluster-gpl
 
- Source Server         : local
- Source Server Type    : MySQL
- Source Server Version : 80018
- Source Host           : localhost:3306
- Source Schema         : deal
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
- Target Server Type    : MySQL
- Target Server Version : 80018
- File Encoding         : 65001
+--
+-- Current Database: `deal`
+--
 
- Date: 31/10/2019 13:26:19
-*/
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `deal` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+USE `deal`;
+
+--
+-- Table structure for table `item`
+--
 
 -- ----------------------------
 -- Table structure for item
@@ -103,10 +113,10 @@ DROP TABLE IF EXISTS `promo`;
 CREATE TABLE `promo`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `promo_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `start_date` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `start_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `item_id` int(11) NOT NULL DEFAULT 0,
   `promo_item_price` double(10, 2) NOT NULL DEFAULT 0.00,
-  `end_date` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 

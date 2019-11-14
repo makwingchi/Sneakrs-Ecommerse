@@ -1,18 +1,23 @@
 package com.project.deal.controller;
 
+import com.alibaba.druid.sql.ast.expr.SQLCaseExpr;
 import com.project.deal.controller.viewobject.ItemVO;
 import com.project.deal.error.BusinessException;
 import com.project.deal.response.CommonReturnType;
+import com.project.deal.service.CacheService;
 import com.project.deal.service.ItemService;
+import com.project.deal.service.PromoService;
 import com.project.deal.service.model.ItemModel;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Controller
@@ -22,6 +27,15 @@ public class ItemController extends BaseController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private CacheService cacheService;
+
+    @Autowired
+    private PromoService promoService;
 
     // Create an item
     @RequestMapping(value = "/create", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
@@ -46,10 +60,37 @@ public class ItemController extends BaseController {
         return CommonReturnType.create(itemVO);
     }
 
+    @RequestMapping(value = "/publishpromo", method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType publishPromo(@RequestParam(name = "id") Integer id) {
+        promoService.publishPromo(id);
+        return CommonReturnType.create(null);
+    }
+
     // Item detail page
     @RequestMapping(value = "/get", method = {RequestMethod.GET})
     @ResponseBody
     public CommonReturnType getItem(@RequestParam(name = "id") Integer id) {
+//        ItemModel itemModel = null;
+//
+//        // Take Guava cache first
+//        itemModel = (ItemModel) cacheService.getFromCommonCache("item_" + id);
+//
+//        if (itemModel == null) {
+//            // Get itemModel according to item ID from redis
+//            itemModel = (ItemModel) redisTemplate.opsForValue().get("item_" + id);
+//
+//            // If there is no such itemModel in redis, go to itemService
+//            if(itemModel == null) {
+//                itemModel = itemService.getItemById(id);
+//                // Set itemModel to redis
+//                redisTemplate.opsForValue().set("item_" + id, itemModel);
+//                redisTemplate.expire("item_" + id, 10, TimeUnit.MINUTES);
+//            }
+//            // Set itemModel into Guava cache
+//            cacheService.setCommonCache("item_" + id, itemModel);
+//        }
+
         ItemModel itemModel = itemService.getItemById(id);
         ItemVO itemVO = convertVOFromModel(itemModel);
         return CommonReturnType.create(itemVO);

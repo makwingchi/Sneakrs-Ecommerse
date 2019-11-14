@@ -8,6 +8,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectId" id="1SfHvINwwwVY0jibUocPwLDuQ7A" />
   <component name="PropertiesComponent">
     <property name="RequestMappingsPanelOrder0" value="0" />
@@ -16,6 +24,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../newdeal" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -54,6 +63,12 @@
       <workItem from="1572016640021" duration="5578000" />
       <workItem from="1572548973261" duration="666000" />
       <workItem from="1572552588937" duration="342000" />
+      <workItem from="1573241809391" duration="22000" />
+      <workItem from="1573258426172" duration="6785000" />
+      <workItem from="1573272604600" duration="3677000" />
+      <workItem from="1573316745791" duration="5918000" />
+      <workItem from="1573346578940" duration="13901000" />
+      <workItem from="1573743480278" duration="19207000" />
     </task>
     <servers />
   </component>

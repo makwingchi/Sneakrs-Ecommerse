@@ -16,6 +16,9 @@ public interface ItemService {
     // Product detail
     ItemModel getItemById(Integer id);
 
+    // item及promo model缓存模型
+    ItemModel getItemByIdInCache(Integer id);
+
     // Decrease stock when a user purchases an item
     boolean decreaseStock(Integer itemId, Integer amount) throws BusinessException;
 

@@ -2,11 +2,14 @@ package com.project.deal.service.impl;
 
 import com.project.deal.dao.PromoDOMapper;
 import com.project.deal.dataobject.PromoDO;
+import com.project.deal.service.ItemService;
 import com.project.deal.service.PromoService;
+import com.project.deal.service.model.ItemModel;
 import com.project.deal.service.model.PromoModel;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,6 +19,12 @@ public class PromoServiceImpl implements PromoService {
 
     @Autowired
     private PromoDOMapper promoDOMapper;
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public PromoModel getPromoByItemId(Integer itemId) {
@@ -38,6 +47,19 @@ public class PromoServiceImpl implements PromoService {
         }
 
         return promoModel;
+    }
+
+    @Override
+    public void publishPromo(Integer promoId) {
+        // Get promo through ID
+        PromoDO promoDO = promoDOMapper.selectByPrimaryKey(promoId);
+        if(promoDO.getItemId() == null || promoDO.getItemId().intValue() == 0) {
+            return;
+        }
+        ItemModel itemModel = itemService.getItemById(promoDO.getItemId());
+
+        // Synchronize promo into redis
+        redisTemplate.opsForValue().set("promo_item_stock_" + itemModel.getId(), itemModel.getStock());
     }
 
     private PromoModel convertFromDataObject(PromoDO promoDO) {

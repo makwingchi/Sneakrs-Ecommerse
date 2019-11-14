@@ -10,6 +10,9 @@ public interface UserService {
     // Get user model through ID
     UserModel getUserById(Integer id);
 
+    // Get use model from cache
+    UserModel getUserByIdInCache(Integer id);
+
     void register(UserModel userModel) throws BusinessException;
 
     // phone: the phone number a particular user uses to register; password: encrypted password

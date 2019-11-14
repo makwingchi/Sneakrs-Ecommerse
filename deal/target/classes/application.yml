@@ -1,5 +1,9 @@
 server:
   port: 8888
+  tomcat:
+    accept-count: 1000
+    max-threads: 800
+    min-spare-threads: 100
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
@@ -10,7 +14,20 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/deal?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT
     username: root
     password: 123456
-#   使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  # Spring's dependency on Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 10
+    password: 123456
+    # Jedis Pool
+    jedis:
+      pool:
+        max-active: 50
+        min-idle: 20

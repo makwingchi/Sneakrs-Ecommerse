@@ -9,12 +9,15 @@ import com.project.deal.service.model.UserModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/user")
@@ -27,6 +30,9 @@ public class UserController extends BaseController {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     // User Login
     @RequestMapping(value = "/login", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
     @ResponseBody
@@ -34,17 +40,25 @@ public class UserController extends BaseController {
                                   @RequestParam(name="password") String password) throws BusinessException {
         // Basic check to input parameters
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
-            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "传入数据不能为空");
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "input cannot be null");
         }
 
         // Check if the user's telephone number matches the password input
         UserModel userModel = userService.validateLogin(phone, this.EncodeByMd5(password));
 
         // Add corresponding attributes to session
-        this.httpServletRequest.getSession().setAttribute("IS_LOGIN", true);
-        this.httpServletRequest.getSession().setAttribute("LOGIN_USER", userModel);
+        // this.httpServletRequest.getSession().setAttribute("IS_LOGIN", true);
+        // this.httpServletRequest.getSession().setAttribute("LOGIN_USER", userModel);
 
-        return CommonReturnType.create(null);
+        // When user logs in, we put their token into redis
+        String uuidToken = UUID.randomUUID().toString();
+        uuidToken = uuidToken.replace("-", "");
+
+        // connect token and login status
+        redisTemplate.opsForValue().set(uuidToken, userModel);
+        redisTemplate.expire(uuidToken, 1, TimeUnit.HOURS);
+
+        return CommonReturnType.create(uuidToken);
     }
 
     // User register
@@ -58,7 +72,9 @@ public class UserController extends BaseController {
                                      @RequestParam(name="password") String password) throws BusinessException {
 
         // Check if telephone number matches otp code
-        String inSessionOtpCode = (String) this.httpServletRequest.getSession().getAttribute(phone);
+        // String inSessionOtpCode = (String) this.httpServletRequest.getSession().getAttribute(phone);
+        String inSessionOtpCode = (String) redisTemplate.opsForValue().get(phone);
+        System.out.println(inSessionOtpCode);
         if (!com.alibaba.druid.util.StringUtils.equals(otpCode, inSessionOtpCode)) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "OTP does not match.");
         }
@@ -95,7 +111,9 @@ public class UserController extends BaseController {
         String otpCode = String.valueOf(randomInt);
 
         // phone number <-> OTP
-        httpServletRequest.getSession().setAttribute(phone, otpCode);
+        // httpServletRequest.getSession().setAttribute(phone, otpCode);
+        redisTemplate.opsForValue().set(phone, otpCode);
+        redisTemplate.expire(phone, 1, TimeUnit.MINUTES);
 
         // Send OTP to user's mobile (omitted here)
         // System.out.println("telephone: " + phone + ", OTPCode: "+ otpCode);
@@ -109,12 +127,12 @@ public class UserController extends BaseController {
         // Get user model with the corresponding ID
         UserModel userModel = userService.getUserById(id);
 
-        // if user does not exist, return a customized error message
+        // If user does not exist, return a customized error message
         if (userModel == null) {
             throw new BusinessException(EmBusinessError.USER_NOT_EXIST);
         }
 
-        // convert user model to user vo
+        // Convert user model to user vo
         UserVO userVO = convertFromModel(userModel);
 
         return CommonReturnType.create(userVO);

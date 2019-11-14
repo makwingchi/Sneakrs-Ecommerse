@@ -4,9 +4,10 @@ package com.project.deal.service.model;
 import org.joda.time.DateTime;
 
 import javax.xml.crypto.Data;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class PromoModel {
+public class PromoModel implements Serializable {
 
     private Integer id;
 

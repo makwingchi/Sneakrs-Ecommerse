@@ -41,12 +41,12 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderModel createOrder(Integer userId, Integer itemId, Integer promoId, Integer amount) throws BusinessException {
         // 1. Check order status: whether the item exists, whether the user exists, and whether the amount is valid.
-        ItemModel itemModel = itemService.getItemById(itemId);
+        ItemModel itemModel = itemService.getItemByIdInCache(itemId);
         if (itemModel == null) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "Item does not exist");
         }
 
-        UserModel userModel = userService.getUserById(userId);
+        UserModel userModel = userService.getUserByIdInCache(userId);
         if (userModel == null) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "User does not exist");
         }
@@ -71,7 +71,6 @@ public class OrderServiceImpl implements OrderService {
         if (!result) {
             throw new BusinessException(EmBusinessError.STOCK_NOT_ENOUGH);
         }
-//        System.out.println("GOOD TO GO!");
 
         // 3. add order into DB
         OrderModel orderModel = new OrderModel();

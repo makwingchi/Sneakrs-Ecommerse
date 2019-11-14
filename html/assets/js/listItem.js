@@ -1,5 +1,6 @@
+
 // Item info sent from the backend
-	var g_itemlist = [];
+var g_itemlist = [];
 	
 	jQuery(document).ready(function() {
 		
