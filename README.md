@@ -17,10 +17,7 @@ An E-commerse website with ***Get OTP (one-time password)***, ***Log in***, ***R
 - `MySQL`
 
 ## TODO
-- [ ] Add sign out functionality
-- [ ] Allow users to purchase more than one item
 - [ ] Send *real* OTP to new users via text messages
 - [ ] Add load balance to improve the distribution of workloads under high concurrency
 - [ ] Implement Message Queue to manage asynchronous messages
-- [ ] Deploy to Cloud
 - [ ] ...
